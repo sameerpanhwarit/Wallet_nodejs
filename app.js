@@ -92,6 +92,14 @@ app.post('/debit', async (req, res) => {
 
 });
 
+//get wallet details by get method
+app.get('/wallet/:profileId', async(req,res)=>{
+    const {profileId}= req.params;
+    const Filter = {"profileId":parseInt(profileId,10)};
+    const result = await collection.findOne(Filter)
+    res.render("wallet", {wallet: result})
+
+})
 
 //this function generate walletID and profileID
 function generateRandom9DigitNumber() {
@@ -100,13 +108,7 @@ function generateRandom9DigitNumber() {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-app.get('/wallet/:profileId', async(req,res)=>{
-    const {profileId}= req.params;
-    const Filter = {"profileId":parseInt(profileId,10)};
-    const result = await collection.findOne(Filter)
-    res.render("wallet", {wallet: result})
 
-})
 
 // Start the server
 app.listen(port, () => {
